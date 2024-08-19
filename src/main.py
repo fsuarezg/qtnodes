@@ -9,12 +9,12 @@ if __name__ == '__main__':
 
     app = QtWidgets.QApplication(sys.argv)
 
-    file = QtCore.QFile('css:theme_dark.qss')
-    file.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
-    app.setStyleSheet(str(file.readAll(), 'utf-8'))
+    # file = QtCore.QFile('css:theme_dark.qss')
+    # file.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
+    # app.setStyleSheet(str(file.readAll(), 'utf-8'))
 
     my_main_window = NodeEditor()
-    my_main_window.initialize()
+    my_main_window.initialize_ui()
 
     res = app.exec()
     sys.exit(res)
