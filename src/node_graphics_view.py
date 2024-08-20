@@ -6,7 +6,7 @@ class GraphicsView(QtWidgets.QGraphicsView):
     def __init__(self, grScene, parent=None):
         super(GraphicsView, self).__init__(parent)
         self.grScene = grScene
-        self.initialize_ui()
+        self.initUI()
         self.setScene(self.grScene)
 
         self.zoomInFactor = 1.25
@@ -16,7 +16,7 @@ class GraphicsView(QtWidgets.QGraphicsView):
         self.zoomStep = 1
         self.zoomRange = [0, 10]
     
-    def initialize_ui(self):
+    def initUI(self):
         # Make any drawn items smoother with antialiasing
         self.setRenderHints(QtGui.QPainter.Antialiasing |
                             QtGui.QPainter.TextAntialiasing | 
@@ -106,6 +106,6 @@ class GraphicsView(QtWidgets.QGraphicsView):
         pos = event.position()
         newPos = self.mapToScene(pos.x(), pos.y())
         delta = newPos - oldPos
-        self.translate(delta.x, delta.y)
+        self.translate(delta.x(), delta.y())
 
 

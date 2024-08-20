@@ -4,9 +4,11 @@ from PySide6 import QtCore
 import math
 
 class GraphicsScene(QtWidgets.QGraphicsScene):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, scene_width=64000, scene_height=64000):
         super(GraphicsScene, self).__init__(parent)
-        self.initialize_ui()
+        self.scene_width = scene_width 
+        self.scene_height = scene_height
+        self.initUI()
         
     @property
     def _color_background(self):
@@ -28,18 +30,20 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
     def _grid_squares(self):
         return 5
     
-    def initialize_ui(self):
+    def initUI(self):
         self._pen_light = QtGui.QPen(self._color_light)
         self._pen_light.setWidth(1)
         self._pen_dark = QtGui.QPen(self._color_dark)
         self._pen_dark.setWidth(2)
         self.setBackgroundBrush(self._color_background)
-        self.scene_width, self.scene_height = 64000, 64000
-        self.setSceneRect(-self.scene_width//2,
-                          -self.scene_height//2, 
-                          self.scene_width,
-                          self.scene_height)
         
+        self.setSceneSize(self.scene_width, self.scene_width)
+
+    def setSceneSize(self, width, height):
+        self.scene_width = width
+        self.scene_height = height
+        self.setSceneRect(-width//2, -height//2, width, height)
+
     def drawBackground(self, painter, rect):
         super().drawBackground(painter, rect)
 
