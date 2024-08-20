@@ -2,7 +2,7 @@ from PySide6 import QtWidgets
 from PySide6 import QtGui
 
 from scene_manager import SceneManager
-from node_graphics_view import GraphicsView
+from src.graphics_view import GraphicsView
 
 class NodeEditor(QtWidgets.QWidget):
     def __init__(self, parent=None):
