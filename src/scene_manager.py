@@ -1,4 +1,4 @@
-from src.graphics_scene import GraphicsScene
+from graphics_scene import GraphicsScene
 
 
 class SceneManager():
