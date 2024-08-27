@@ -21,7 +21,6 @@ class SceneManager():
     def addEdge(self, edge):
         self.edges.append(edge)
 
-
     def removeNode(self, node):
         self.nodes.remove(node)
 

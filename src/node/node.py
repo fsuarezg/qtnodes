@@ -12,6 +12,5 @@ class Node():
         self.scene.addNode(self)
         self.scene.grScene.addItem(self.grNode)
 
-
         self.inputs = []
         self.outputs = []

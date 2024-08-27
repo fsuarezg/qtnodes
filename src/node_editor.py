@@ -5,6 +5,7 @@ from scene_manager import SceneManager
 from graphics_view import GraphicsView
 from node.node import Node
 
+
 class NodeEditor(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(NodeEditor, self).__init__(parent)

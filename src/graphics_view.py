@@ -1,6 +1,7 @@
 from PySide6 import QtWidgets
 from PySide6 import QtGui
-from PySide6 import QtCore 
+from PySide6 import QtCore
+
 
 class GraphicsView(QtWidgets.QGraphicsView):
     def __init__(self, grScene, parent=None):
@@ -15,11 +16,11 @@ class GraphicsView(QtWidgets.QGraphicsView):
         self.zoom = 10
         self.zoomStep = 1
         self.zoomRange = [0, 10]
-    
+
     def initUI(self):
         # Make any drawn items smoother with antialiasing
         self.setRenderHints(QtGui.QPainter.Antialiasing |
-                            QtGui.QPainter.TextAntialiasing | 
+                            QtGui.QPainter.TextAntialiasing |
                             QtGui.QPainter.SmoothPixmapTransform)
 
         self.setViewportUpdateMode(QtWidgets.QGraphicsView.FullViewportUpdate)
@@ -50,13 +51,12 @@ class GraphicsView(QtWidgets.QGraphicsView):
         else:
             super().mouseReleaseEvent(event)
 
-
     def middleMouseButtonPress(self, event):
         """Allow dragging view upon middle mouse press
 
         Args:
             event (_type_): _description_
-        """        
+        """
         self.setDragMode(QtWidgets.QGraphicsView.ScrollHandDrag)
         fakeEvent = QtGui.QMouseEvent(
             event.type(), event.localPos(), event.screenPos(),
@@ -64,11 +64,8 @@ class GraphicsView(QtWidgets.QGraphicsView):
             event.modifiers())
         super().mousePressEvent(fakeEvent)
 
-
-
     def middleMouseButtonRelease(self, event):
         self.setDragMode(QtWidgets.QGraphicsView.NoDrag)
-
 
     def leftMouseButtonPress(self, event):
         return super().mousePressEvent(event)
@@ -81,10 +78,10 @@ class GraphicsView(QtWidgets.QGraphicsView):
 
     def rightMouseButtonRelease(self, event):
         return super().mouseReleaseEvent(event)
-    
+
     def wheelEvent(self, event):
         # Store scene position
-        # BUG: Pyside 6.7 has a bug where mapToScene needs to have exact 
+        # BUG: Pyside 6.7 has a bug where mapToScene needs to have exact
         # (int, int) type passed. Normally I should be able to pass on the
         # event.position() directly
         pos = event.position()
@@ -98,7 +95,7 @@ class GraphicsView(QtWidgets.QGraphicsView):
             zoomFactor = self.zoomOutFactor
             self.zoom -= self.zoomStep
 
-        # Set scene scale 
+        # Set scene scale
         self.scale(zoomFactor, zoomFactor)
 
         # Translate view
@@ -107,5 +104,3 @@ class GraphicsView(QtWidgets.QGraphicsView):
         newPos = self.mapToScene(pos.x(), pos.y())
         delta = newPos - oldPos
         self.translate(delta.x(), delta.y())
-
-

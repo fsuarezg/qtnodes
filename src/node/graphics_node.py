@@ -10,7 +10,6 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self._title_color = QtCore.Qt.white
         self._title_font = QtGui.QFont("Ubuntu", 10)
 
-
         self.width = 180
         self.height = 240
         self.edge_size = 10.0
@@ -26,9 +25,7 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self.initTitle()
         self.title = title
 
-
         self.initUI()
-
 
     def boundingRect(self):
         return QtCore.QRectF(
@@ -42,7 +39,6 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self.setFlag(QtWidgets.QGraphicsItem.ItemIsSelectable)
         self.setFlag(QtWidgets.QGraphicsItem.ItemIsMovable)
 
-
     def initTitle(self):
         self.title_item = QtWidgets.QGraphicsTextItem(self)
         self.title_item.setDefaultTextColor(self._title_color)
@@ -55,17 +51,17 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
 
     @property
     def title(self): return self._title
+
     @title.setter
     def title(self, value):
         self._title = value
         self.title_item.setPlainText(self._title)
 
-
     def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
         # title
         path_title = QtGui.QPainterPath()
         path_title.setFillRule(QtCore.Qt.WindingFill)
-        path_title.addRoundedRect(0,0, self.width, self.title_height,
+        path_title.addRoundedRect(0, 0, self.width, self.title_height,
                                   self.edge_size, self.edge_size)
         path_title.addRect(0, self.title_height - self.edge_size,
                            self.edge_size, self.edge_size)
@@ -76,12 +72,12 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         painter.setBrush(self._brush_title)
         painter.drawPath(path_title.simplified())
 
-
         # content
         path_content = QtGui.QPainterPath()
         path_content.setFillRule(QtCore.Qt.WindingFill)
-        path_content.addRoundedRect(0, self.title_height, 
-                                    self.width, self.height - self.title_height,
+        path_content.addRoundedRect(0, self.title_height,
+                                    self.width,
+                                    self.height - self.title_height,
                                     self.edge_size, self.edge_size)
         path_content.addRect(0, self.title_height,
                              self.edge_size, self.edge_size)
@@ -90,7 +86,6 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         painter.setPen(QtCore.Qt.NoPen)
         painter.setBrush(self._brush_background)
         painter.drawPath(path_content.simplified())
-
 
         # outline
         path_outline = QtGui.QPainterPath()
