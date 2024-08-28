@@ -12,8 +12,22 @@ class Socket():
 
         self.node = node
         self.index = index
-        self.position = LEFT_TOP
+        self.position = position
 
         self.grSocket = QDMGraphicsSocket(self.node.grNode)
 
         self.grSocket.setPos(*self.node.getSocketPosition(index, position))
+        self.edge = None
+
+    def getSocketPosition(self):
+        res = self.node.getSocketPosition(self.index, self.position)
+        return res
+
+    def setConnectedEdge(self, edge=None):
+        self.edge = edge
+
+    def hasEdge(self):
+        if not self.edge:
+            return False
+        else:
+            return True

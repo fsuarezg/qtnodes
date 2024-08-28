@@ -4,6 +4,14 @@ from PySide6 import QtGui
 
 
 class GraphicsNode(QtWidgets.QGraphicsItem):
+    @property
+    def title(self): return self._title
+
+    @title.setter
+    def title(self, value):
+        self._title = value
+        self.title_item.setPlainText(self._title)
+
     def __init__(self, node, title='Node Graphics Item', parent=None):
         super().__init__(parent)
 
@@ -24,6 +32,7 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
 
         self.initTitle()
         self.title = title
+        self.node = node
 
         self.initUI()
 
@@ -49,13 +58,9 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
             - 2 * self._padding
         )
 
-    @property
-    def title(self): return self._title
-
-    @title.setter
-    def title(self, value):
-        self._title = value
-        self.title_item.setPlainText(self._title)
+    def mouseMoveEvent(self, event):
+        super().mouseMoveEvent(event)
+        self.node.updateConnectedEdges()
 
     def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
         # title
