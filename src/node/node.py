@@ -31,6 +31,13 @@ class Node():
             counter += 1
             self.outputs.append(socket)
 
+    @property
+    def pos(self):
+        return self.grNode.pos()        # QPointF
+
+    def setPos(self, x, y):
+        self.grNode.setPos(x, y)
+
     def getSocketPosition(self, index, position):
         if position in (LEFT_TOP, LEFT_BOTTOM):
             x = 0
