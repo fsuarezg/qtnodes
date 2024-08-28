@@ -7,7 +7,6 @@ from node.node import Node
 from node.edge import Edge
 
 
-
 class NodeEditor(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(NodeEditor, self).__init__(parent)
@@ -22,7 +21,7 @@ class NodeEditor(QtWidgets.QWidget):
         self.scene = SceneManager()
         # self.grScene = self.scene.grScene
 
-        self.addDebugNodes()
+        self.addDebugData()
         # node = Node(self.scene, "My Awesome Node", 
         #             inputs=[1, 2, 3], outputs=[1])
 
@@ -32,7 +31,7 @@ class NodeEditor(QtWidgets.QWidget):
         self.setWindowTitle("Node Editor")
         self.show()
 
-    def addDebugNodes(self):
+    def addDebugData(self):
         node1 = Node(self.scene, "My Awesome Node 1", 
                      inputs=[1, 2, 3], outputs=[1])
         node2 = Node(self.scene, "My Awesome Node 2",
@@ -44,7 +43,7 @@ class NodeEditor(QtWidgets.QWidget):
         node3.setPos(200, -150)
 
         edge1 = Edge(self.scene, node1.outputs[0], node2.inputs[0])
-        edge2 = Edge(self.scene, node2.outputs[0], node3.inputs[0], type=2)
+        edge2 = Edge(self.scene, node2.outputs[0], node3.inputs[0])
 
 
         # greenBrush = QtGui.QBrush(QtGui.Qt.green)
