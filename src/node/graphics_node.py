@@ -31,8 +31,8 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         return QtCore.QRectF(
             0,
             0,
-            2 * self.edge_size + self.width,
-            2 * self.edge_size + self.height
+            self.width,  # 2 * self.edge_size + self.width,
+            self.height  # 2 * self.edge_size + self.height
         ).normalized()
 
     def initUI(self):

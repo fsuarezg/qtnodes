@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from PySide6 import QtGui
+# from PySide6 import QtGui
 
 from scene_manager import SceneManager
 from graphics_view import GraphicsView
@@ -18,9 +18,10 @@ class NodeEditor(QtWidgets.QWidget):
         self.setLayout(self.layout)
 
         self.scene = SceneManager()
-        #self.grScene = self.scene.grScene
+        # self.grScene = self.scene.grScene
 
-        node = Node(self.scene, "My Awesome Node")
+        node = Node(self.scene, "My Awesome Node", 
+                    inputs=[1, 2, 3], outputs=[1])
 
         self.view = GraphicsView(self.scene.grScene, self)
         self.layout.addWidget(self.view)
