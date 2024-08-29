@@ -1,4 +1,4 @@
-from node.graphics_edge import (QDMGraphicsEdgeDirect, QDMGraphicsEdgeBezier)
+from node.graphics_edge import (GraphicsEdgeDirect, GraphicsEdgeBezier)
 
 
 EDGE_TYPE_DIRECT = 1
@@ -15,15 +15,16 @@ class Edge:
         self.end_socket = end_socket
 
         self.start_socket.edge = self
-        # if self.end_socket is not None:
-        self.end_socket.edge = self
+        if self.end_socket is not None:
+            self.end_socket.edge = self
 
         if edge_type == EDGE_TYPE_DIRECT:
-            self.grEdge = QDMGraphicsEdgeDirect(self)
+            self.grEdge = GraphicsEdgeDirect(self)
         else:
-            self.grEdge = QDMGraphicsEdgeBezier(self)
+            self.grEdge = GraphicsEdgeBezier(self)
 
         self.scene.grScene.addItem(self.grEdge)
+        self.scene.addEdge(self)
         self.updatePositions()
 
     def updatePositions(self):
