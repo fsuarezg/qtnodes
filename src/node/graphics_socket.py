@@ -2,6 +2,8 @@ from PySide6 import QtWidgets
 from PySide6 import QtCore
 from PySide6 import QtGui
 
+from config.colors import (COLOR_SOCKET, COLOR__SOCKET_BORDER)
+
 
 class QDMGraphicsSocket(QtWidgets.QGraphicsItem):
     def __init__(self, parent=None):
@@ -9,8 +11,8 @@ class QDMGraphicsSocket(QtWidgets.QGraphicsItem):
 
         self.radius = 6.0
         self.outline_width = 1.0
-        self._color_background = QtGui.QColor("#FFFF7700")
-        self._color_outline = QtGui.QColor("#FF000000")
+        self._color_background = QtGui.QColor(COLOR_SOCKET)
+        self._color_outline = QtGui.QColor(COLOR__SOCKET_BORDER)
 
         self._pen = QtGui.QPen(self._color_outline)
         self._pen.setWidthF(self.outline_width)

@@ -2,6 +2,8 @@ from PySide6 import QtWidgets
 from PySide6 import QtCore
 from PySide6 import QtGui
 
+from config.colors import (COLOR_NODE, COLOR_NODE_SELECTED,
+                           COLOR_NODE_TITLE, COLOR_NODE_BACKGROUND)
 
 class GraphicsNode(QtWidgets.QGraphicsItem):
     @property
@@ -24,11 +26,11 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self.title_height = 24.0
         self._padding = 4.0
 
-        self._pen_default = QtGui.QPen(QtGui.QColor("#7F000000"))
-        self._pen_selected = QtGui.QPen(QtGui.QColor("#FFFFA637"))
-
-        self._brush_title = QtGui.QBrush(QtGui.QColor("#FF313131"))
-        self._brush_background = QtGui.QBrush(QtGui.QColor("#E3212121"))
+        self._pen_default = QtGui.QPen(QtGui.QColor(COLOR_NODE))
+        self._pen_selected = QtGui.QPen(QtGui.QColor(COLOR_NODE_SELECTED))
+        self._brush_title = QtGui.QBrush(QtGui.QColor(COLOR_NODE_TITLE))
+        self._brush_background = QtGui.QBrush(QtGui.QColor(
+                                                    COLOR_NODE_BACKGROUND))
 
         self.initTitle()
         self.title = title

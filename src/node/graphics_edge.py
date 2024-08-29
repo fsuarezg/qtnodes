@@ -3,6 +3,8 @@ from PySide6 import QtCore
 from PySide6 import QtGui
 from abc import abstractmethod
 
+from config.colors import (COLOR_EDGE, COLOR_EDGE_SELECTED)
+
 
 class QDMGraphicsEdge(QtWidgets.QGraphicsPathItem):
     def __init__(self, edge, parent=None):
@@ -10,8 +12,8 @@ class QDMGraphicsEdge(QtWidgets.QGraphicsPathItem):
 
         self.edge = edge
 
-        self._color = QtGui.QColor("#001000")
-        self._color_selected = QtGui.QColor("#00ff00")
+        self._color = QtGui.QColor(COLOR_EDGE)
+        self._color_selected = QtGui.QColor(COLOR_EDGE_SELECTED)
         self._pen = QtGui.QPen(self._color)
         self._pen_selected = QtGui.QPen(self._color_selected)
         self._pen.setWidthF(2.0)

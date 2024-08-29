@@ -3,6 +3,9 @@ from PySide6 import QtGui
 from PySide6 import QtCore
 import math
 
+from config.colors import (COLOR_SCENE_BACKGROUND, COLOR_SCENE_GRID_LIGHT,
+                           COLOR_SCENE_GRID_DARK)
+
 
 class GraphicsScene(QtWidgets.QGraphicsScene):
     def __init__(self, parent=None, scene_width=64000, scene_height=64000):
@@ -13,15 +16,15 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
 
     @property
     def _color_background(self):
-        return QtGui.QColor('#393939')
+        return QtGui.QColor(COLOR_SCENE_BACKGROUND)
 
     @property
     def _color_light(self):
-        return QtGui.QColor('#2f2f2f')
+        return QtGui.QColor(COLOR_SCENE_GRID_LIGHT)
 
     @property
     def _color_dark(self):
-        return QtGui.QColor('#292929')
+        return QtGui.QColor(COLOR_SCENE_GRID_DARK)
 
     @property
     def _grid_size(self):
