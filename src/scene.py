@@ -1,7 +1,7 @@
 from graphics_scene import GraphicsScene
 
 
-class SceneManager():
+class Scene():
     def __init__(self):
         self.nodes = []
         self.edges = []
@@ -12,7 +12,7 @@ class SceneManager():
         self.initUI()
 
     def initUI(self):
-        self.grScene = GraphicsScene()
+        self.grScene = GraphicsScene(self)
         self.grScene.setSceneSize(self.scene_width, self.scene_height)
 
     def addNode(self, node):
