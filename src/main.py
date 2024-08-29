@@ -14,7 +14,6 @@ if __name__ == '__main__':
     # app.setStyleSheet(str(file.readAll(), 'utf-8'))
 
     my_main_window = NodeEditor()
-    my_main_window.initUI()
 
     res = app.exec()
     sys.exit(res)
