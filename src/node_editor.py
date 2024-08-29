@@ -1,7 +1,7 @@
 from PySide6 import QtWidgets
 # from PySide6 import QtGui
 
-from scene_manager import SceneManager
+from scene import Scene
 from graphics_view import GraphicsView
 from node.node import Node
 from node.edge import Edge
@@ -9,21 +9,20 @@ from node.edge import Edge
 
 class NodeEditor(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super(NodeEditor, self).__init__(parent)
+        super().__init__(parent)
         self.initUI()
 
     def initUI(self):
         self.setGeometry(200, 200, 800, 600)
 
         self.layout = QtWidgets.QVBoxLayout()
+        self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
 
-        self.scene = SceneManager()
-        # self.grScene = self.scene.grScene
+        # create graphics scene
+        self.scene = Scene()
 
         self.addDebugData()
-        # node = Node(self.scene, "My Awesome Node", 
-        #             inputs=[1, 2, 3], outputs=[1])
 
         self.view = GraphicsView(self.scene.grScene, self)
         self.layout.addWidget(self.view)
@@ -32,7 +31,7 @@ class NodeEditor(QtWidgets.QWidget):
         self.show()
 
     def addDebugData(self):
-        node1 = Node(self.scene, "My Awesome Node 1", 
+        node1 = Node(self.scene, "My Awesome Node 1",
                      inputs=[1, 2, 3], outputs=[1])
         node2 = Node(self.scene, "My Awesome Node 2",
                      inputs=[1, 2, 3], outputs=[1])
