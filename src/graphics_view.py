@@ -120,11 +120,13 @@ class GraphicsView(QtWidgets.QGraphicsView):
     def rightMouseButtonRelease(self, event):
         super().mouseReleaseEvent(event)
 
+    def mouseMoveEvent(self, event):
+        if self.mode == MODE_EDGE_DRAG:
+            pos = self.mapToScene(event.pos())
+            self.dragEdge.grEdge.setDestination(pos.x(), pos.y())
+            self.dragEdge.grEdge.update()
+
     def wheelEvent(self, event):
-        # Store scene position
-        # BUG: Pyside 6.7 has a bug where mapToScene needs to have exact
-        # (int, int) type passed. Normally I should be able to pass on the
-        # event.position() directly
         pos = event.position()
         oldPos = self.mapToScene(pos.x(), pos.y())
 
@@ -140,7 +142,6 @@ class GraphicsView(QtWidgets.QGraphicsView):
         self.scale(zoomFactor, zoomFactor)
 
         # Translate view
-        # BUG: see above
         pos = event.position()
         newPos = self.mapToScene(pos.x(), pos.y())
         delta = newPos - oldPos
@@ -164,7 +165,14 @@ class GraphicsView(QtWidgets.QGraphicsView):
 
         if type(item) is GraphicsSocket:
             print('  assign End Socket')
+            self.dragEdge.end_socket = item.socket
+            self.dragEdge.start_socket.setConnectedEdge(self.dragEdge)
+            self.dragEdge.end_socket.setConnectedEdge(self.dragEdge)
+            self.dragEdge.updatePositions()
             return True
+        
+        self.dragEdge.remove()
+        self.dragEdge = None
 
         return False
 
@@ -178,4 +186,3 @@ class GraphicsView(QtWidgets.QGraphicsView):
             EDGE_DRAG_START_THRESHOLD*EDGE_DRAG_START_THRESHOLD
         return (dist_scene.x()*dist_scene.x() +
                 dist_scene.y()*dist_scene.y()) > edge_drag_threshold_sq
-
