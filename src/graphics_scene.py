@@ -8,11 +8,17 @@ from config.colors import (COLOR_SCENE_BACKGROUND, COLOR_SCENE_GRID_LIGHT,
 
 
 class GraphicsScene(QtWidgets.QGraphicsScene):
-    def __init__(self, parent=None, scene_width=64000, scene_height=64000):
-        super(GraphicsScene, self).__init__(parent)
-        self.scene_width = scene_width
-        self.scene_height = scene_height
-        self.initUI()
+    def __init__(self, scene, parent=None):
+        super().__init__(parent)
+
+        self.scene = scene
+
+        self._pen_light = QtGui.QPen(self._color_light)
+        self._pen_light.setWidth(1)
+        self._pen_dark = QtGui.QPen(self._color_dark)
+        self._pen_dark.setWidth(2)
+        self.setBackgroundBrush(self._color_background)
+
 
     @property
     def _color_background(self):
@@ -33,15 +39,6 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
     @property
     def _grid_squares(self):
         return 5
-
-    def initUI(self):
-        self._pen_light = QtGui.QPen(self._color_light)
-        self._pen_light.setWidth(1)
-        self._pen_dark = QtGui.QPen(self._color_dark)
-        self._pen_dark.setWidth(2)
-        self.setBackgroundBrush(self._color_background)
-
-        self.setSceneSize(self.scene_width, self.scene_width)
 
     def setSceneSize(self, width, height):
         self.scene_width = width
