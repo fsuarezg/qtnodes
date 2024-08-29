@@ -5,9 +5,10 @@ from PySide6 import QtGui
 from config.colors import (COLOR_SOCKET, COLOR__SOCKET_BORDER)
 
 
-class QDMGraphicsSocket(QtWidgets.QGraphicsItem):
-    def __init__(self, parent=None):
-        super().__init__(parent)
+class GraphicsSocket(QtWidgets.QGraphicsItem):
+    def __init__(self, socket, socket_type=1):
+        self.socket = socket
+        super().__init__(socket.node.grNode)
 
         self.radius = 6.0
         self.outline_width = 1.0
