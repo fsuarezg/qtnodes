@@ -121,6 +121,7 @@ class GraphicsView(QtWidgets.QGraphicsView):
         super().mouseReleaseEvent(event)
 
     def mouseMoveEvent(self, event):
+        super().mouseMoveEvent(event)
         if self.mode == MODE_EDGE_DRAG:
             pos = self.mapToScene(event.pos())
             self.dragEdge.grEdge.setDestination(pos.x(), pos.y())
