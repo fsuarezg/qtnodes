@@ -6,7 +6,7 @@ from abc import abstractmethod
 from config.colors import (COLOR_EDGE, COLOR_EDGE_SELECTED)
 
 
-class QDMGraphicsEdge(QtWidgets.QGraphicsPathItem):
+class GraphicsEdge(QtWidgets.QGraphicsPathItem):
     def __init__(self, edge, parent=None):
         super().__init__(parent)
 
@@ -16,6 +16,8 @@ class QDMGraphicsEdge(QtWidgets.QGraphicsPathItem):
         self._color_selected = QtGui.QColor(COLOR_EDGE_SELECTED)
         self._pen = QtGui.QPen(self._color)
         self._pen_selected = QtGui.QPen(self._color_selected)
+        self._pen_dragging = QtGui.QPen(self._color)
+        self._pen_dragging.setStyle(QtCore.Qt.DashLine)
         self._pen.setWidthF(2.0)
         self._pen_selected.setWidthF(2.0)
 
@@ -34,10 +36,12 @@ class QDMGraphicsEdge(QtWidgets.QGraphicsPathItem):
 
     def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
         self.updatePath()
-        if not self.isSelected():
-            painter.setPen(self._pen)
-        else:
+        if not self.edge.end_socket:
+            painter.setPen(self._pen_dragging)
+        elif self.isSelected():
             painter.setPen(self._pen_selected)
+        else:
+            painter.setPen(self._pen)
         painter.setBrush(QtCore.Qt.NoBrush)
         painter.drawPath(self.path())
 
@@ -48,7 +52,7 @@ class QDMGraphicsEdge(QtWidgets.QGraphicsPathItem):
             'This method has to be overriden in a child class')
 
 
-class QDMGraphicsEdgeDirect(QDMGraphicsEdge):
+class GraphicsEdgeDirect(GraphicsEdge):
     def updatePath(self):
         path = QtGui.QPainterPath(QtCore.QPointF(self.posSource[0],
                                                  self.posSource[1]))
@@ -56,7 +60,7 @@ class QDMGraphicsEdgeDirect(QDMGraphicsEdge):
         self.setPath(path)
 
 
-class QDMGraphicsEdgeBezier(QDMGraphicsEdge):
+class GraphicsEdgeBezier(GraphicsEdge):
     def updatePath(self):
         s = self.posSource
         d = self.posDestination
