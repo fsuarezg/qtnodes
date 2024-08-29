@@ -2,6 +2,15 @@ from PySide6 import QtWidgets
 from PySide6 import QtGui
 from PySide6 import QtCore
 
+from node.graphics_socket import GraphicsSocket
+from node.edge import Edge
+
+
+MODE_NOOP = 1
+MODE_EDGE_DRAG = 2
+
+EDGE_DRAG_START_THRESHOLD = 10  # in pixels
+
 
 class GraphicsView(QtWidgets.QGraphicsView):
     def __init__(self, grScene, parent=None):
@@ -9,6 +18,8 @@ class GraphicsView(QtWidgets.QGraphicsView):
         self.grScene = grScene
         self.initUI()
         self.setScene(self.grScene)
+
+        self.mode = MODE_NOOP
 
         self.zoomInFactor = 1.25
         self.zoomOutFactor = 1 / self.zoomInFactor
@@ -35,7 +46,7 @@ class GraphicsView(QtWidgets.QGraphicsView):
         if event.button() == QtCore.Qt.MiddleButton:
             self.middleMouseButtonPress(event)
         elif event.button() == QtCore.Qt.LeftButton:
-            self.rightMouseButtonPress(event)
+            self.leftMouseButtonPress(event)
         elif event.button() == QtCore.Qt.RightButton:
             self.rightMouseButtonPress(event)
         else:
@@ -68,16 +79,46 @@ class GraphicsView(QtWidgets.QGraphicsView):
         self.setDragMode(QtWidgets.QGraphicsView.NoDrag)
 
     def leftMouseButtonPress(self, event):
-        return super().mousePressEvent(event)
+        # get item which we clicked on
+        item = self.getItemAtClick(event)
+
+        # we store the position of last LMB click
+        self.last_lmb_click_scene_pos = self.mapToScene(event.pos())
+
+        # logic
+        if type(item) is GraphicsSocket:
+            if self.mode == MODE_NOOP:
+                self.mode = MODE_EDGE_DRAG
+                self.edgeDragStart(item)
+                return
+
+        if self.mode == MODE_EDGE_DRAG:
+            res = self.edgeDragEnd(item)
+            if res:
+                return
+
+        super().mousePressEvent(event)
 
     def leftMouseButtonRelease(self, event):
-        return super().mouseReleaseEvent(event)
+        # get item which we release mouse button on
+        item = self.getItemAtClick(event)
+
+        # logic
+        if self.mode == MODE_EDGE_DRAG:
+            self.mode = MODE_NOOP
+            if self.isDistanceClickAndReleaseSignificant(event):
+                res = self.edgeDragEnd(item)
+                if res:
+                    return
+
+        super().mouseReleaseEvent(event)
 
     def rightMouseButtonPress(self, event):
-        return super().mousePressEvent(event)
+        super().mousePressEvent(event)
+        self.getItemAtClick(event)
 
     def rightMouseButtonRelease(self, event):
-        return super().mouseReleaseEvent(event)
+        super().mouseReleaseEvent(event)
 
     def wheelEvent(self, event):
         # Store scene position
@@ -104,3 +145,37 @@ class GraphicsView(QtWidgets.QGraphicsView):
         newPos = self.mapToScene(pos.x(), pos.y())
         delta = newPos - oldPos
         self.translate(delta.x(), delta.y())
+
+    def getItemAtClick(self, event):
+        """ return the object on which we've clicked/release mouse button """
+        pos = event.pos()
+        obj = self.itemAt(pos)
+        return obj
+
+    def edgeDragStart(self, item):
+        print('Start dragging edge')
+        print('  assign Start Socket')
+        self.dragEdge = Edge(self.grScene.scene, item.socket, None)
+
+    def edgeDragEnd(self, item):
+        """ return True if skip the rest of the code """
+        self.mode = MODE_NOOP
+        print('End dragging edge')
+
+        if type(item) is GraphicsSocket:
+            print('  assign End Socket')
+            return True
+
+        return False
+
+    def isDistanceClickAndReleaseSignificant(self, event):
+        """ measures if the distance between the first LMB click is far
+            enough from the LMB release given a threshold.
+        """
+        new_lmb_release_scene_pos = self.mapToScene(event.pos())
+        dist_scene = new_lmb_release_scene_pos - self.last_lmb_click_scene_pos
+        edge_drag_threshold_sq = \
+            EDGE_DRAG_START_THRESHOLD*EDGE_DRAG_START_THRESHOLD
+        return (dist_scene.x()*dist_scene.x() +
+                dist_scene.y()*dist_scene.y()) > edge_drag_threshold_sq
+
