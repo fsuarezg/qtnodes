@@ -14,9 +14,9 @@ class Edge:
         self.start_socket = start_socket
         self.end_socket = end_socket
 
-        self.start_socket.edge = self
+        self.start_socket.setConnectedEdge(edge=self)
         if self.end_socket is not None:
-            self.end_socket.edge = self
+            self.end_socket.setConnectedEdge(edge=self)
 
         if edge_type == EDGE_TYPE_DIRECT:
             self.grEdge = GraphicsEdgeDirect(self)
