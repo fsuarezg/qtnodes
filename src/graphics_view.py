@@ -124,8 +124,8 @@ class GraphicsView(QtWidgets.QGraphicsView):
         super().mouseMoveEvent(event)
         if self.mode == MODE_EDGE_DRAG:
             pos = self.mapToScene(event.pos())
-            self.dragEdge.grEdge.setDestination(pos.x(), pos.y())
-            self.dragEdge.grEdge.update()
+            self.drag_edge.grEdge.setDestination(pos.x(), pos.y())
+            self.drag_edge.grEdge.update()
 
     def wheelEvent(self, event):
         pos = event.position()
@@ -157,7 +157,9 @@ class GraphicsView(QtWidgets.QGraphicsView):
     def edgeDragStart(self, item):
         print('Start dragging edge')
         print('  assign Start Socket')
-        self.dragEdge = Edge(self.grScene.scene, item.socket, None)
+        self.previous_edge = item.socket.edge
+        self.drag_edge = Edge(self.grScene.scene, item.socket, None)
+        
 
     def edgeDragEnd(self, item):
         """ return True if skip the rest of the code """
@@ -166,14 +168,19 @@ class GraphicsView(QtWidgets.QGraphicsView):
 
         if type(item) is GraphicsSocket:
             print('  assign End Socket')
-            self.dragEdge.end_socket = item.socket
-            self.dragEdge.start_socket.setConnectedEdge(self.dragEdge)
-            self.dragEdge.end_socket.setConnectedEdge(self.dragEdge)
-            self.dragEdge.updatePositions()
+            if item.socket.hasEdge():
+                item.socket.edge.remove()
+            if self.previous_edge:
+                self.previous_edge.remove()
+            self.drag_edge.end_socket = item.socket
+            print(self.drag_edge.end_socket)
+            self.drag_edge.start_socket.setConnectedEdge(self.drag_edge)
+            self.drag_edge.end_socket.setConnectedEdge(self.drag_edge)
+            self.drag_edge.updatePositions()
             return True
         
-        self.dragEdge.remove()
-        self.dragEdge = None
+        self.drag_edge.remove()
+        self.drag_edge = None
 
         return False
 
