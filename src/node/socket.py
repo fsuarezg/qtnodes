@@ -16,8 +16,8 @@ class Socket():
         self.socket_type = socket_type
 
         self.grSocket = GraphicsSocket(self, self.socket_type)
-
         self.grSocket.setPos(*self.node.getSocketPosition(index, position))
+
         self.edge = None
 
     def getSocketPosition(self):
@@ -28,7 +28,7 @@ class Socket():
         self.edge = edge
 
     def hasEdge(self):
-        if not self.edge:
-            return False
-        else:
+        if self.edge:
             return True
+        else:
+            return False
