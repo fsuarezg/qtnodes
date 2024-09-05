@@ -168,7 +168,7 @@ class GraphicsView(QtWidgets.QGraphicsView):
 
         if type(item) is GraphicsSocket:
             print('  assign End Socket')
-            if item.socket.hasEdge():
+            if item.socket.hasEdge() and item.socket.edge != self.previous_edge:
                 item.socket.edge.remove()
             if self.previous_edge:
                 self.previous_edge.remove()
