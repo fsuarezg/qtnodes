@@ -4,6 +4,8 @@ from PySide6 import QtWidgets
 from scene import Scene
 from graphics_view import GraphicsView
 from node.node import Node
+from node.fragment_node import FragmentNode
+from node.entity_node import EntityNode
 from node.edge import Edge
 
 
@@ -31,18 +33,15 @@ class NodeEditor(QtWidgets.QWidget):
         self.show()
 
     def addDebugData(self):
-        node1 = Node(self.scene, "My Awesome Node 1",
-                     inputs=[1, 2, 3], outputs=[1])
-        node2 = Node(self.scene, "My Awesome Node 2",
-                     inputs=[1, 2, 3], outputs=[1])
-        node3 = Node(self.scene, "My Awesome Node 3",
-                     inputs=[1, 2, 3], outputs=[1])
-        node1.setPos(-350, -250)
-        node2.setPos(-75, 0)
-        node3.setPos(200, -150)
+        fragmentnode1 = FragmentNode(self.scene, inputs=[1], outputs=[1])
+        entitynode1 = EntityNode(self.scene, inputs=[1], outputs=[1])
+        fragmentnode2 = FragmentNode(self.scene, inputs=[1], outputs=[1])
+        fragmentnode1.setPos(-350, 0)
+        entitynode1.setPos(-75, 0)
+        fragmentnode2.setPos(200, 0)
 
-        edge1 = Edge(self.scene, node1.outputs[0], node2.inputs[0])
-        edge2 = Edge(self.scene, node2.outputs[0], node3.inputs[0])
+        edge1 = Edge(self.scene, fragmentnode1.outputs[0], entitynode1.inputs[0])
+        edge2 = Edge(self.scene, entitynode1.outputs[0], fragmentnode2.inputs[0])
 
 
         # greenBrush = QtGui.QBrush(QtGui.Qt.green)
