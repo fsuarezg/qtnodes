@@ -4,6 +4,7 @@ from PySide6 import QtCore
 
 from node.graphics_socket import GraphicsSocket
 from node.edge import Edge
+from node.graphics_edge import GraphicsEdgeBezier
 
 
 MODE_NOOP = 1
@@ -41,6 +42,10 @@ class GraphicsView(QtWidgets.QGraphicsView):
 
         # Apply transformation under mouse position
         self.setTransformationAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
+
+    # ----------------
+    # EVENT FUNCTIONS
+    # ----------------
 
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.MiddleButton:
@@ -147,6 +152,18 @@ class GraphicsView(QtWidgets.QGraphicsView):
         newPos = self.mapToScene(pos.x(), pos.y())
         delta = newPos - oldPos
         self.translate(delta.x(), delta.y())
+
+    def keyPressEvent(self, event):
+        match event.key():
+            case QtCore.Qt.Key_Backspace:
+                selected_items = self.grScene.selectedItems()
+                for item in selected_items:
+                    print(item)
+            case QtCore.Qt.Key_Delete:
+                print('hooray2')
+    # ----------------
+    # HELPER FUNCTIONS
+    # ----------------
 
     def getItemAtClick(self, event):
         """ return the object on which we've clicked/release mouse button """
