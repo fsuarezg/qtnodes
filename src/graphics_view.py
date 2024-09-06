@@ -159,7 +159,6 @@ class GraphicsView(QtWidgets.QGraphicsView):
         print('  assign Start Socket')
         self.previous_edge = item.socket.edge
         self.drag_edge = Edge(self.grScene.scene, item.socket, None)
-        
 
     def edgeDragEnd(self, item):
         """ return True if skip the rest of the code """
@@ -168,7 +167,8 @@ class GraphicsView(QtWidgets.QGraphicsView):
 
         if type(item) is GraphicsSocket:
             print('  assign End Socket')
-            if item.socket.hasEdge() and item.socket.edge != self.previous_edge:
+            if item.socket.hasEdge() and \
+               item.socket.edge != self.previous_edge:
                 item.socket.edge.remove()
             if self.previous_edge:
                 self.previous_edge.remove()
@@ -178,7 +178,7 @@ class GraphicsView(QtWidgets.QGraphicsView):
             self.drag_edge.end_socket.setConnectedEdge(self.drag_edge)
             self.drag_edge.updatePositions()
             return True
-        
+
         self.drag_edge.remove()
         self.drag_edge = None
 
