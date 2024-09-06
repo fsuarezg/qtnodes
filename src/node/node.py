@@ -2,6 +2,8 @@ from node.graphics_node import GraphicsNode
 from node.socket import (Socket,
                          LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM)
 
+from config.constants import (NODE_SOCKET_SPACING)
+
 
 class Node():
     def __init__(self, scene, title="Undefined Node", inputs=[], outputs=[]):
@@ -9,12 +11,13 @@ class Node():
 
         self.title = title
 
-        self.grNode = GraphicsNode(self, self.title)
+        nr_sockets = max(len(inputs), len(outputs))
+        self.grNode = GraphicsNode(self, self.title, nr_sockets=nr_sockets)
 
         self.scene.addNode(self)
         self.scene.grScene.addItem(self.grNode)
 
-        self.socket_spacing = 22
+        self.socket_spacing = NODE_SOCKET_SPACING
 
         # create socket for inputs and outputs
         self.inputs = []

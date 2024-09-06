@@ -4,6 +4,8 @@ from PySide6 import QtGui
 
 from config.colors import (COLOR_NODE, COLOR_NODE_SELECTED,
                            COLOR_NODE_TITLE, COLOR_NODE_BACKGROUND)
+from config.constants import (SOCKET_RADIUS, NODE_SOCKET_SPACING, 
+                              NODE_HEIGHT, NODE_WIDTH)
 
 class GraphicsNode(QtWidgets.QGraphicsItem):
     @property
@@ -14,18 +16,25 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self._title = value
         self.title_item.setPlainText(self._title)
 
-    def __init__(self, node, title='Node Graphics Item', parent=None):
+    def __init__(self, node, title='Node Graphics Item', parent=None,
+                 nr_sockets=1):
         super().__init__(parent)
 
         self._title_color = QtCore.Qt.white
         self._title_font = QtGui.QFont("Ubuntu", 10)
 
-        self.width = 180
-        self.height = 240
         self.edge_size = 10.0
-        self.title_height = 24.0
+        self.title_height = 25.0
         self._padding = 4.0
+        self.width = NODE_WIDTH
 
+        if (nr_sockets in [0, 1]):
+            self.height = NODE_HEIGHT
+        else:
+            additional_height = ((nr_sockets-1)
+                                 * (SOCKET_RADIUS + NODE_SOCKET_SPACING))
+            self.height = NODE_HEIGHT + additional_height
+        
         self._pen_default = QtGui.QPen(QtGui.QColor(COLOR_NODE))
         self._pen_selected = QtGui.QPen(QtGui.QColor(COLOR_NODE_SELECTED))
         self._brush_title = QtGui.QBrush(QtGui.QColor(COLOR_NODE_TITLE))
@@ -39,12 +48,7 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self.initUI()
 
     def boundingRect(self):
-        return QtCore.QRectF(
-            0,
-            0,
-            self.width,  # 2 * self.edge_size + self.width,
-            self.height  # 2 * self.edge_size + self.height
-        ).normalized()
+        return QtCore.QRectF(0, 0, self.width, self.height).normalized()
 
     def initUI(self):
         self.setFlag(QtWidgets.QGraphicsItem.ItemIsSelectable)

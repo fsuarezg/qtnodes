@@ -3,6 +3,7 @@ from PySide6 import QtCore
 from PySide6 import QtGui
 
 from config.colors import (COLOR_SOCKET, COLOR__SOCKET_BORDER)
+from config.constants import (SOCKET_RADIUS, SOCKET_OUTLINE_WIDTH)
 
 
 class GraphicsSocket(QtWidgets.QGraphicsItem):
@@ -10,8 +11,8 @@ class GraphicsSocket(QtWidgets.QGraphicsItem):
         self.socket = socket
         super().__init__(socket.node.grNode)
 
-        self.radius = 6.0
-        self.outline_width = 1.0
+        self.radius = SOCKET_RADIUS
+        self.outline_width = SOCKET_OUTLINE_WIDTH
         self._color_background = QtGui.QColor(COLOR_SOCKET)
         self._color_outline = QtGui.QColor(COLOR__SOCKET_BORDER)
 
