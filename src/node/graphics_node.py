@@ -7,6 +7,7 @@ from config.colors import (COLOR_NODE, COLOR_NODE_SELECTED,
 from config.constants import (SOCKET_RADIUS, NODE_SOCKET_SPACING, 
                               NODE_HEIGHT, NODE_WIDTH)
 
+
 class GraphicsNode(QtWidgets.QGraphicsItem):
     @property
     def title(self): return self._title

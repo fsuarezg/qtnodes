@@ -6,13 +6,14 @@ from config.constants import (NODE_SOCKET_SPACING)
 
 
 class Node():
-    def __init__(self, scene, title="Undefined Node", inputs=[], outputs=[]):
+    def __init__(self, scene, title="Undefined Node", inputs=[], outputs=[],
+                 grNodeclass=GraphicsNode):
         self.scene = scene
 
         self.title = title
 
         nr_sockets = max(len(inputs), len(outputs))
-        self.grNode = GraphicsNode(self, self.title, nr_sockets=nr_sockets)
+        self.grNode = grNodeclass(self, self.title, nr_sockets=nr_sockets)
 
         self.scene.addNode(self)
         self.scene.grScene.addItem(self.grNode)
