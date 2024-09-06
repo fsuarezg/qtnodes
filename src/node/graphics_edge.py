@@ -10,6 +10,7 @@ from node.socket import (RIGHT_TOP, RIGHT_BOTTOM,
 
 EDGE_CP_ROUNDNESS = 100
 
+
 class GraphicsEdge(QtWidgets.QGraphicsPathItem):
     def __init__(self, edge, parent=None):
         super().__init__(parent)
