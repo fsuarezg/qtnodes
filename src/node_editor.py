@@ -40,10 +40,12 @@ class NodeEditor(QtWidgets.QWidget):
         entitynode1 = EntityNode(self.scene, inputs=[1, 2, 3], outputs=[1])
         fragmentnode2 = FragmentNode(self.scene, inputs=[1], outputs=[1])
         fragmentnode3 = FragmentNode(self.scene, inputs=[], outputs=[])
+        entitynode2 = EntityNode(self.scene, inputs=[], outputs=[])
         fragmentnode1.setPos(-350, 0)
         entitynode1.setPos(-75, 0)
         fragmentnode2.setPos(200, 0)
         fragmentnode3.setPos(475, 0)
+        entitynode2.setPos(475, -75)
 
         edge1 = Edge(self.scene, fragmentnode1.outputs[0],
                      entitynode1.inputs[0])
