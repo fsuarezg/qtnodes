@@ -1,6 +1,7 @@
 from node.graphics_node import GraphicsNode
 from node.socket import (Socket,
                          LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM)
+from node.expand_socket import ExpandSocket
 
 from config.constants import (NODE_SOCKET_SPACING)
 
