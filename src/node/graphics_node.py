@@ -5,7 +5,8 @@ from PySide6 import QtGui
 from config.colors import (COLOR_NODE, COLOR_NODE_SELECTED,
                            COLOR_NODE_TITLE, COLOR_NODE_BACKGROUND)
 from config.constants import (SOCKET_RADIUS, NODE_SOCKET_SPACING, 
-                              NODE_HEIGHT, NODE_WIDTH)
+                              NODE_HEIGHT, NODE_WIDTH, NODE_EDGE_SIZE,
+                              NODE_TITLE_HEIGHT, NODE_PADDING)
 
 
 class GraphicsNode(QtWidgets.QGraphicsItem):
@@ -24,9 +25,9 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self._title_color = QtCore.Qt.white
         self._title_font = QtGui.QFont("Ubuntu", 10)
 
-        self.edge_size = 10.0
-        self.title_height = 25.0
-        self._padding = 4.0
+        self.edge_size = NODE_EDGE_SIZE
+        self.title_height = NODE_TITLE_HEIGHT
+        self._padding = NODE_PADDING
         self.width = NODE_WIDTH
 
         if (nr_sockets in [0, 1]):
