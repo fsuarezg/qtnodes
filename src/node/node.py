@@ -1,6 +1,7 @@
 from node.graphics_node import GraphicsNode
 from node.socket import (Socket,
-                         LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM)
+                         LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM,
+                         LEFT_CENTER, RIGHT_CENTER)
 from node.expand_socket import ExpandSocket
 
 from config.constants import (NODE_SOCKET_SPACING)
@@ -20,6 +21,13 @@ class Node():
         self.scene.grScene.addItem(self.grNode)
 
         self.socket_spacing = NODE_SOCKET_SPACING
+
+        # create expend sockets
+
+        self.socket_in = ExpandSocket(node=self, index=0,
+                                      position=LEFT_CENTER)
+        self.socket_out = ExpandSocket(node=self, index=0,
+                                       position=RIGHT_CENTER)
 
         # create socket for inputs and outputs
         self.inputs = []
@@ -58,6 +66,18 @@ class Node():
             y = self.grNode.title_height + self.grNode._padding \
                 + self.grNode.edge_size + index * self.socket_spacing
 
+        return [x, y]
+    
+    def getExpandSocketPosition(self, index, position):
+        if position == LEFT_CENTER:
+            x = 0
+        else:
+            x = self.grNode.width
+
+        y = (self.grNode.title_height + self.grNode._padding 
+             + self.grNode.edge_size + index * self.socket_spacing)
+
+        print(x, y)
         return [x, y]
     
     def updateConnectedEdges(self):

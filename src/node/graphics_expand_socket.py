@@ -8,11 +8,11 @@ from config.constants import (SOCKET_RADIUS, SOCKET_OUTLINE_WIDTH)
 
 
 class GraphicsExpandSocket(QtWidgets.QGraphicsItem):
-    def __init__(self, socket, socket_type=1):
+    def __init__(self, socket):
         self.socket = socket
         super().__init__(socket.node.grNode)
 
-        self.radius = (SOCKET_RADIUS*2)+1
+        self.radius = (SOCKET_RADIUS*1.5)+1
         self.outline_width = SOCKET_OUTLINE_WIDTH
         self._color_background = QtGui.QColor(COLOR_EXPAND_SOCKET)
         self._color_outline = QtGui.QColor(COLOR_SOCKET_BORDER)
@@ -34,8 +34,10 @@ class GraphicsExpandSocket(QtWidgets.QGraphicsItem):
         # painting plus sign
         painter.setBrush(self._plusbrush)
         painter.setPen(self._pluspen)
-        rectangle1 = QtCore.QRectF(-self.radius/3/2, -self.radius/2, self.radius/3, self.radius)
-        rectangle2 = QtCore.QRectF(-self.radius/2, -self.radius/3/2, self.radius, self.radius/3)
+        rectangle1 = QtCore.QRectF(-self.radius/3/2, -self.radius/2,
+                                   self.radius/3, self.radius)
+        rectangle2 = QtCore.QRectF(-self.radius/2, -self.radius/3/2,
+                                   self.radius, self.radius/3)
         painter.drawRect(rectangle1)
         painter.drawRect(rectangle2)
 

@@ -1,27 +1,22 @@
 from node.graphics_expand_socket import GraphicsExpandSocket
-
-
-LEFT_TOP = 1
-LEFT_BOTTOM = 2
-RIGHT_TOP = 3
-RIGHT_BOTTOM = 4
+from node.socket import (LEFT_CENTER)
 
 
 class ExpandSocket():
-    def __init__(self, node, index=0, position=LEFT_TOP, socket_type=1):
+    def __init__(self, node, index=0, position=LEFT_CENTER):
 
         self.node = node
         self.index = index
         self.position = position
-        self.socket_type = socket_type
 
-        self.grSocket = GraphicsExpandSocket(self, self.socket_type)
-        self.grSocket.setPos(*self.node.getSocketPosition(index, position))
+        self.grSocket = GraphicsExpandSocket(self)
+        self.grSocket.setPos(*self.node.getExpandSocketPosition(index,
+                                                                position))
 
         self.edge = None
 
-    def getSocketPosition(self):
-        res = self.node.getSocketPosition(self.index, self.position)
+    def getExpandSocketPosition(self):
+        res = self.node.getExpandSocketPosition(self.index, self.position)
         return res
 
     def setConnectedEdge(self, edge=None):
