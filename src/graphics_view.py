@@ -4,7 +4,7 @@ from PySide6 import QtCore
 
 from node.graphics_socket import GraphicsSocket
 from node.edge import Edge
-from node.graphics_edge import GraphicsEdgeBezier
+from node.graphics_edge import GraphicsEdge
 
 
 MODE_NOOP = 1
@@ -157,10 +157,14 @@ class GraphicsView(QtWidgets.QGraphicsView):
         match event.key():
             case QtCore.Qt.Key_Backspace:
                 selected_items = self.grScene.selectedItems()
-                for item in selected_items:
-                    print(item)
+                selected_edges = [item.edge for item in selected_items
+                                  if isinstance(item, GraphicsEdge)]
+                self.remove_edges(selected_edges)
             case QtCore.Qt.Key_Delete:
-                print('hooray2')
+                selected_items = self.grScene.selectedItems()
+                selected_edges = [item.edge for item in selected_items
+                                  if isinstance(item, GraphicsEdge)]
+                self.remove_edges(selected_edges)
     # ----------------
     # HELPER FUNCTIONS
     # ----------------
@@ -211,3 +215,7 @@ class GraphicsView(QtWidgets.QGraphicsView):
             EDGE_DRAG_START_THRESHOLD*EDGE_DRAG_START_THRESHOLD
         return (dist_scene.x()*dist_scene.x() +
                 dist_scene.y()*dist_scene.y()) > edge_drag_threshold_sq
+    
+    def remove_edges(self, edges: list[Edge]):
+        for edge in edges:
+            edge.remove()
