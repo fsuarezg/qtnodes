@@ -4,7 +4,7 @@ from PySide6 import QtGui
 
 from config.colors import (COLOR_NODE, COLOR_NODE_SELECTED,
                            COLOR_NODE_TITLE, COLOR_NODE_BACKGROUND)
-from config.constants import (SOCKET_RADIUS, NODE_SOCKET_SPACING, 
+from config.constants import (SOCKET_RADIUS, NODE_SOCKET_SPACING,
                               NODE_HEIGHT, NODE_WIDTH, NODE_EDGE_SIZE,
                               NODE_TITLE_HEIGHT, NODE_PADDING)
 
@@ -19,7 +19,7 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self.title_item.setPlainText(self._title)
 
     def __init__(self, node, title='Node Graphics Item', parent=None,
-                 nr_sockets=1):
+                 nr_sockets=0):
         super().__init__(parent)
 
         self._title_color = QtCore.Qt.white
@@ -30,13 +30,12 @@ class GraphicsNode(QtWidgets.QGraphicsItem):
         self._padding = NODE_PADDING
         self.width = NODE_WIDTH
 
-        if (nr_sockets in [0, 1]):
+        if nr_sockets == 0:
             self.height = NODE_HEIGHT
         else:
-            additional_height = ((nr_sockets-1)
-                                 * (SOCKET_RADIUS + NODE_SOCKET_SPACING))
-            self.height = NODE_HEIGHT + additional_height
-        
+            additional_height = ((nr_sockets+1.5) * NODE_SOCKET_SPACING)
+            self.height = additional_height
+
         self._pen_default = QtGui.QPen(QtGui.QColor(COLOR_NODE))
         self._pen_selected = QtGui.QPen(QtGui.QColor(COLOR_NODE_SELECTED))
         self._brush_title = QtGui.QBrush(QtGui.QColor(COLOR_NODE_TITLE))

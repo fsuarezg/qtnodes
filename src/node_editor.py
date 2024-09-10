@@ -15,7 +15,7 @@ class NodeEditor(QtWidgets.QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(200, 200, 800, 600)
+        self.setGeometry(200, 200, 1200, 800)
 
         self.layout = QtWidgets.QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
