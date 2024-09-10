@@ -34,7 +34,7 @@ class Node():
         self.outputs = []
         counter = 0
         for item in inputs:
-            socket = Socket(node=self, index=counter, position=LEFT_BOTTOM)
+            socket = Socket(node=self, index=counter, position=LEFT_TOP)
             counter += 1
             self.inputs.append(socket)
 
