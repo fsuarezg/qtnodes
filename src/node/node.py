@@ -24,10 +24,10 @@ class Node():
 
         # create expend sockets
 
-        self.socket_in = ExpandSocket(node=self, index=0,
-                                      position=LEFT_CENTER)
-        self.socket_out = ExpandSocket(node=self, index=0,
-                                       position=RIGHT_CENTER)
+        # self.socket_in = ExpandSocket(node=self, index=0,
+        #                               position=LEFT_CENTER)
+        # self.socket_out = ExpandSocket(node=self, index=0,
+        #                                position=RIGHT_CENTER)
 
         # create socket for inputs and outputs
         self.inputs = []
