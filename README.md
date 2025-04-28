@@ -1,6 +1,7 @@
 # qtnodes
 
-A Qt project to learn about a node editor.
+A Qt project to learn about creating a node editor in qt.
+This project was now integrated my current studio.
 
 Resources:
 https://www.youtube.com/watch?v=xbTLhMJARrk&list=PLZSNHzwDCOggHLThIbCxUhWTgrKVemZkz&index=1&pp=iAQB
